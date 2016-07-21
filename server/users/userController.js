@@ -244,7 +244,7 @@ module.exports = {
             user.save(function(err , userUpdated){
               if(userUpdated){
                 var average = user.pairReflect / user.counter;
-                res.status(201).send({average:average})
+                res.status(201).send({average:average , counter: user.counter})
               }
             })
           }
