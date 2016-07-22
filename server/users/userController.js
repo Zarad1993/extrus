@@ -183,6 +183,7 @@ module.exports = {
           user.email = req.body.email || user.email;
           user.firstName = req.body.firstName || user.firstName;
           user.lastName = req.body.lastName || user.lastName;
+          user.About = req.body.About || user.About;
           user.age = req.body.age || user.age;
           user.image = req.body.image || user.image;
           user.employed = req.body.employed || user.employed; // Edit if employed 
