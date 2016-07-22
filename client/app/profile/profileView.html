@@ -22,11 +22,11 @@
         <h3>About: {{user.About || "-"}}</h3>
         <h3>Pair Reflect :  {{user.average}}/10 from {{user.counter}} students.
         <jk-rating-stars 
+          ng-show="Rating"
           max-rating="5" 
           rating="secondRate" 
           on-rating="onItemRating(rating)">
         </jk-rating-stars>
-        <div style="width: 100px">{{secondRate}} Stars</div>
         </h3>
       </div>
     </md-dialog-content>
