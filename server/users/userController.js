@@ -60,7 +60,7 @@ module.exports = {
 	},
 
   getOne : function(req,res){
-    User.find({username: req.params.id})
+    User.findOne({username: req.params.id})
         .exec(function(err, user){
           if(user){
             return res.status(200).send(user);
@@ -198,7 +198,6 @@ module.exports = {
           user.image = req.body.image || user.image;
           user.employed = req.body.employed; // Edit if employed 
           user.gitHub = req.body.gitHub || user.gitHub; // Edit your gitHub repo if needed.
-          user.pairReflect = req.body.pairReflect; // Set up the pair Reflect
           if(req.body.oldPassword){
             User.comparePassword(req.body.oldPassword,user.password, res, function(found){
               if(!found){
