@@ -128,7 +128,7 @@ module.exports = {
           age: req.body.age,
           cohortNumber: req.body.cohortNumber,
           image: req.body.image || 'http://i.imgur.com/FlEXhZo.jpg?1',
-          gitHub : req.body.gitHub ,  // Add your gitHub account and is optional
+          gitHub : req.body.gitHub || 'Not added Yet',  // Add your gitHub account and is optional
           employed : req.body.employed || false, //  Add if employed , if left empty then by default would be false;
           counter : 0 , 
           pairReflect :  0
@@ -186,9 +186,9 @@ module.exports = {
           user.About = req.body.About || user.About;
           user.age = req.body.age || user.age;
           user.image = req.body.image || user.image;
-          user.employed = req.body.employed || user.employed; // Edit if employed 
+          user.employed = req.body.employed; // Edit if employed 
           user.gitHub = req.body.gitHub || user.gitHub; // Edit your gitHub repo if needed.
-          user.pairReflect = req.body.pairReflect || user.pairReflect; // Set up the pair Reflect
+          user.pairReflect = req.body.pairReflect; // Set up the pair Reflect
           if(req.body.oldPassword){
             User.comparePassword(req.body.oldPassword,user.password, res, function(found){
               if(!found){
