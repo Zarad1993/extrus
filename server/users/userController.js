@@ -1,7 +1,7 @@
 var User = require('./userModel.js');
-var Q = require('q');
 var jwt = require('jwt-simple');
 var Message = require('../messages/messageModel.js')
+
 module.exports = {
 
 	forgetPassUser : function(req,res){
@@ -244,7 +244,7 @@ module.exports = {
             user.save(function(err , userUpdated){
               if(userUpdated){
                 var average = user.pairReflect / user.counter;
-                res.status(201).send({average:average , counter: user.counter})
+                res.status(201).send({average:average})
               }
             })
           }
