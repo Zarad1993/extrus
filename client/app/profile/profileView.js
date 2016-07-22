@@ -4,6 +4,12 @@ angular.module('RBKme.profileView', [])
   	$scope.user = {};
   	$scope.user = user;
 
+  	if(user.employed){
+  		$scope.career="Yes, Thanks for Checking Up"
+  	} else{
+  		$scope.career="Not Yet"
+  	}
+
 	$scope.sameUser = function(){
 		var token = $window.localStorage.getItem('com.RBKme');
 		if(!token){
