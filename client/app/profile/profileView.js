@@ -1,9 +1,22 @@
 angular.module('RBKme.profileView', [])
-.controller('profileViewController', function ($scope, $window, $mdDialog, user) {
+.controller('profileViewController', function ($scope, $window, $mdDialog, Users ,user) {
   	
   	$scope.user = {};
   	$scope.user = user;
+  	$scope.user.average = Math.floor(user.pairReflect/user.counter) || 0;
 
+
+  	$scope.onItemRating = function(rating){
+  		var obj = { pairReflect : rating*2 , 
+  					username : user.username
+  				};
+  		Users.updatePair(obj).then(function(response){
+  			Users.getOne(user.username).then(function(response){
+  				$scope.user.counter = response.counter;
+  				$scope.user.average = Math.floor(response.pairReflect/response.counter);
+  			})
+  		});		 
+  	};
   	if(user.employed){
   		$scope.career="Yes, Thanks for Checking Up"
   	} else{
