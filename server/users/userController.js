@@ -59,6 +59,15 @@ module.exports = {
 			});
 	},
 
+  getOne : function(req,res){
+    User.find({username: req.params.id})
+        .exec(function(err, user){
+          if(user){
+            return res.status(200).send(user);
+          }
+        })
+  },
+
 	getAllUsers: function(req,res){
 		User.find({})
 			.exec(function(error, users){
@@ -80,6 +89,7 @@ module.exports = {
             newObj.pairReflect = users[i].pairReflect;
             newObj.gitHub = users[i].gitHub;  // Added a gitHub on creation
             newObj.employed = users[i].employed; // Added a Boolean to check if employed
+            newObj.counter = users[i].counter; // send the counter to display the ratings out of # of students.
             newArr.push(newObj);
           }
 				  res.json(newArr);
@@ -245,7 +255,7 @@ module.exports = {
             user.save(function(err , userUpdated){
               if(userUpdated){
                 var average = user.pairReflect / user.counter;
-                res.status(201).send({average:average})
+                res.status(201).send({average:average , counter: user.counter})
               }
             })
           }
