@@ -1,11 +1,16 @@
 angular.module('RBKme.profileView', [])
 .controller('profileViewController', function ($scope, $window, $mdDialog, Users ,user , Auth) {
   	
-
-
 	$scope.user = {};
 	$scope.user = user;
-	$scope.user.average = Math.floor(user.pairReflect/user.counter) || 0;
+  $scope.total = 0;
+
+  if($scope.user.usersRating.length > 0){
+    for(var i = 0; i < $scope.user.usersRating.length ; i++){
+      $scope.total+= $scope.user.usersRating[i].rating;
+    };
+  }
+	$scope.user.average = Math.floor($scope.total/user.counter) || 0;
   $scope.Rating = false;
 
 
@@ -15,22 +20,28 @@ angular.module('RBKme.profileView', [])
     // else don't.
     $scope.Rating = true;
   	$scope.onItemRating = function(rating){
-  		var obj = { pairReflect : rating*2 , 
-  					username : user.username
+  		var obj = {  pairReflect : rating*2 , 
+  					       username : user.username,
+                   from : $window.username
   				};
-  		Users.updatePair(obj).then(function(response){
-  			Users.getOne(user.username).then(function(response){
-  				$scope.user.counter = response.counter;
-  				$scope.user.average = Math.floor(response.pairReflect/response.counter);
-  			})
-  		});		 
+  		Users.updatePair(obj); // This function updates the usersRating key.
+      // After updating . get that username to update his total pair review.
+      Users.getOne(user.username).then(function(response){
+        $scope.total = 0;
+        for(var i = 0; i < response.usersRating.length ; i++){
+          $scope.total+= response.usersRating[i].rating;
+        };
+        $scope.user.counter = response.counter;
+        $scope.user.average = Math.floor($scope.total/response.counter);
+      })
   	};
-  	if(user.employed){
-  		$scope.career="Yes, Thanks for Checking Up"
-  	} else{
-  		$scope.career="Not Yet"
-  	}   
   }
+
+  if(user.employed){
+    $scope.career="Yes, Thanks for Checking Up"
+  } else{
+    $scope.career="Not Yet"
+  }   
 
   //  When page is unloaded then sign out 
   //  So you can no longer rate
